@@ -1,288 +1,96 @@
-<!doctype html>
 
-
-
-  
-
-
-<html class="theme-next muse use-motion">
+ <!DOCTYPE HTML>
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
-
-
-
-
+  <meta charset="UTF-8">
   
-  
-  
-  
-
-  
+    <title>3sum_quickSort | HuNanZai&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
+    <meta name="author" content="HuNanZai">
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="算法,leetecode," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
-
-
-
-
-
-
-<meta name="description" content="KSum问题对于leetcode上类似的问题以及博客有很多，以下是我的个人总结
+    <meta name="description" content="KSum问题对于leetcode上类似的问题以及博客有很多，以下是我的个人总结
 解决思路
 排序(去除部分重复的情况比如-1 -1 -1 0…就只需要判断一个-1即可)
 hashtable第二次去重
 
-示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445//针对leetcode上的T">
-<meta property="og:type" content="article">
-<meta property="og:title" content="3sum_quickSort">
-<meta property="og:url" content="http://yoursite.com/2016/05/06/3sum-quickSort/index.html">
-<meta property="og:site_name" content="HuNanZai's Blog">
-<meta property="og:description" content="KSum问题对于leetcode上类似的问题以及博客有很多，以下是我的个人总结
-解决思路
-排序(去除部分重复的情况比如-1 -1 -1 0…就只需要判断一个-1即可)
-hashtable第二次去重
-
-示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445//针对leetcode上的T">
-<meta property="og:updated_time" content="2016-05-06T08:24:58.240Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="3sum_quickSort">
-<meta name="twitter:description" content="KSum问题对于leetcode上类似的问题以及博客有很多，以下是我的个人总结
-解决思路
-排序(去除部分重复的情况比如-1 -1 -1 0…就只需要判断一个-1即可)
-hashtable第二次去重
-
-示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445//针对leetcode上的T">
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 0,
-      author: '博主'
-    }
-  };
-</script>
-
-  <title> 3sum_quickSort | HuNanZai's Blog </title>
+示例代码1234567891011121314151617181920212223242526272">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">HuNanZai's Blog</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle"></p>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="HuNanZai&#39;s Blog" title="HuNanZai&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="HuNanZai&#39;s Blog">HuNanZai&#39;s Blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
 </div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
- </div>
     </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
     
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
+      <a href="/2016/05/06/3sum-quickSort/" title="3sum_quickSort" itemprop="url">3sum_quickSort</a>
+  </h1>
+  <p class="article-author">By
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                3sum_quickSort
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-06T15:32:37+08:00" content="2016-05-06">
-              2016-05-06
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
+      <a href="http://yoursite.com" title="HuNanZai">HuNanZai</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-05-06T07:32:37.000Z" itemprop="datePublished">2016-05-06</time>
+    Updated:<time datetime="2016-05-06T08:27:31.765Z" itemprop="dateModified">2016-05-06</time>
     
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="KSum问题"><a href="#KSum问题" class="headerlink" title="KSum问题"></a>KSum问题</h1><p>对于leetcode上类似的问题以及博客有很多，以下是我的个人总结</p>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KSum问题"><span class="toc-number">1.</span> <span class="toc-text">KSum问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决思路"><span class="toc-number">1.1.</span> <span class="toc-text">解决思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例代码"><span class="toc-number">1.1.1.</span> <span class="toc-text">示例代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#快速排序"><span class="toc-number">2.</span> <span class="toc-text">快速排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#核心思想"><span class="toc-number">2.1.</span> <span class="toc-text">核心思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-number">2.2.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化"><span class="toc-number">2.3.</span> <span class="toc-text">优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例代码-1"><span class="toc-number">2.4.</span> <span class="toc-text">示例代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#php"><span class="toc-number">2.4.1.</span> <span class="toc-text">php</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript"><span class="toc-number">2.4.2.</span> <span class="toc-text">javascript</span></a></li></ol></li></ol></li></ol>
+		</div>
+		
+		<h1 id="KSum问题"><a href="#KSum问题" class="headerlink" title="KSum问题"></a>KSum问题</h1><p>对于leetcode上类似的问题以及博客有很多，以下是我的个人总结</p>
 <h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><ol>
 <li>排序(去除部分重复的情况比如-1 -1 -1 0…就只需要判断一个-1即可)</li>
 <li>hashtable第二次去重</li>
@@ -308,205 +116,206 @@ hashtable第二次去重
 - 不稳定(相同的值相对的位置排序完成之后可能发生变化)
 </code></pre><h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><pre><code>- 对于pivot的选择特殊情况下可以优化
 </code></pre><h2 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="示例代码"></a>示例代码</h2><h3 id="php"><a href="#php" class="headerlink" title="php"></a>php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span><span class="params">(&amp;$arr)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	quickSortByPos($arr, <span class="number">0</span>, count($arr)<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">return</span> $arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSortByPos</span><span class="params">(&amp;$arr, $begin, $end)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> ($begin &gt;= $end) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	$i = $begin;</span><br><span class="line">	$j = $end;</span><br><span class="line">	$pos = intval(floor(($begin+$end)/<span class="number">2</span>));</span><br><span class="line">	$compare	= $arr[$pos];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> ($i&lt;$j) &#123;</span><br><span class="line">		<span class="keyword">if</span> ($arr[$i] &gt; $compare) &#123;</span><br><span class="line">			$arr[$pos] = $arr[$i];</span><br><span class="line">			$pos = $i;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			$i++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> ($arr[$j] &lt; $compare) &#123;</span><br><span class="line">			$arr[$pos] = $arr[$j];</span><br><span class="line">			$pos = $j;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			$j--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	$arr[$pos] = $compare;</span><br><span class="line"></span><br><span class="line">	quickSortByPos($arr, $begin, $pos<span class="number">-1</span>);</span><br><span class="line">	quickSortByPos($arr, $pos+<span class="number">1</span>, $end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> quickSort = <span class="function"><span class="keyword">function</span> (<span class="params">arr, start, end</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start&gt;=end) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> i, j, pos, compare;</span><br><span class="line">    i = start;</span><br><span class="line">    j = end;</span><br><span class="line">    pos = <span class="built_in">Math</span>.floor((start+end)/<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    compare = arr[pos];</span><br><span class="line">    <span class="keyword">while</span> (i&lt;j) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i]&gt;compare) &#123;</span><br><span class="line">            arr[pos] = arr[i];</span><br><span class="line">            pos = i;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (arr[j]&lt;compare) &#123;</span><br><span class="line">            arr[pos] = arr[j];</span><br><span class="line">            pos = j;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[pos] = compare;</span><br><span class="line"></span><br><span class="line">    quickSort(arr, start, pos<span class="number">-1</span>);</span><br><span class="line">    quickSort(arr, pos+<span class="number">1</span>, end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
+<h3 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> quickSort = <span class="function"><span class="keyword">function</span> (<span class="params">arr, start, end</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start&gt;=end) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> i, j, pos, compare;</span><br><span class="line">    i = start;</span><br><span class="line">    j = end;</span><br><span class="line">    pos = <span class="built_in">Math</span>.floor((start+end)/<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    compare = arr[pos];</span><br><span class="line">    <span class="keyword">while</span> (i&lt;j) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i]&gt;compare) &#123;</span><br><span class="line">            arr[pos] = arr[i];</span><br><span class="line">            pos = i;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (arr[j]&lt;compare) &#123;</span><br><span class="line">            arr[pos] = arr[j];</span><br><span class="line">            pos = j;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[pos] = compare;</span><br><span class="line"></span><br><span class="line">    quickSort(arr, start, pos<span class="number">-1</span>);</span><br><span class="line">    quickSort(arr, pos+<span class="number">1</span>, end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
 
-    <div>
-      
-        
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/算法/" rel="tag">#算法</a>
-          
-            <a href="/tags/leetecode/" rel="tag">#leetecode</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/05/04/GithubHexoBlog/" rel="next" title="快速简单的个人博客搭建">
-                <i class="fa fa-chevron-left"></i> 快速简单的个人博客搭建
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-  </div>
-
-
-        </div>
-        
-          
+  <div class="article-tags">
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/leetecode/">leetecode</a>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/default_avatar.jpg"
-               alt="HuNanZai" />
-          <p class="site-author-name" itemprop="name">HuNanZai</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">3</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#KSum问题"><span class="nav-number">1.</span> <span class="nav-text">KSum问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">1.1.</span> <span class="nav-text">解决思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例代码"><span class="nav-number">1.1.1.</span> <span class="nav-text">示例代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速排序"><span class="nav-number">2.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心思想"><span class="nav-number">2.1.</span> <span class="nav-text">核心思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">2.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">2.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码-1"><span class="nav-number">2.4.</span> <span class="nav-text">示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#php"><span class="nav-number">2.4.1.</span> <span class="nav-text">php</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#javascript"><span class="nav-number">2.4.2.</span> <span class="nav-text">javascript</span></a></li></ol></li></ol></li></ol></div>
-            
-          </div>
-        </section>
-      
-
-    </div>
-  </aside>
 
 
-        
-      </div>
-    </main>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">HuNanZai</span>
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2016/05/06/3sum-quickSort/" data-title="3sum_quickSort | HuNanZai&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/05/04/GithubHexoBlog/"  title="快速简单的个人博客搭建">
+ <strong>NEXT:</strong><br/> 
+ <span>快速简单的个人博客搭建
+</span>
+</a>
 </div>
 
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
+</nav>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KSum问题"><span class="toc-number">1.</span> <span class="toc-text">KSum问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决思路"><span class="toc-number">1.1.</span> <span class="toc-text">解决思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例代码"><span class="toc-number">1.1.1.</span> <span class="toc-text">示例代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#快速排序"><span class="toc-number">2.</span> <span class="toc-text">快速排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#核心思想"><span class="toc-number">2.1.</span> <span class="toc-text">核心思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-number">2.2.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化"><span class="toc-number">2.3.</span> <span class="toc-text">优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例代码-1"><span class="toc-number">2.4.</span> <span class="toc-text">示例代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#php"><span class="toc-number">2.4.1.</span> <span class="toc-text">php</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript"><span class="toc-number">2.4.2.</span> <span class="toc-text">javascript</span></a></li></ol></li></ol></li></ol>
   </div>
 
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
   
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/leetecode/" title="leetecode">leetecode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/个人/" title="个人">个人<sup>1</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://yoursite.com" target="_blank" title="HuNanZai">HuNanZai</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
 
 <script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
 </script>
 
 
@@ -514,72 +323,5 @@ hashtable第二次去重
 
 
 
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-
-
-  
-
-
-
-  
-  
-  
-
-  
-
-  
-
-</body>
+  </body>
 </html>
