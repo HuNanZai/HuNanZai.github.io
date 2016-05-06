@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="算法,leetecode," />
 
 
 
@@ -80,15 +80,34 @@
 
 
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HuNanZai's Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="KSum问题对于leetcode上类似的问题以及博客有很多，以下是我的个人总结
+##解决思路
+
+排序(去除部分重复的情况比如-1 -1 -1 0…就只需要判断一个-1即可)
+hashtable第二次去重
+
+###示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445//针对leetc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3sum_quickSort">
+<meta property="og:url" content="http://yoursite.com/2016/05/06/3sum-quickSort/index.html">
 <meta property="og:site_name" content="HuNanZai's Blog">
-<meta property="og:description">
+<meta property="og:description" content="KSum问题对于leetcode上类似的问题以及博客有很多，以下是我的个人总结
+##解决思路
+
+排序(去除部分重复的情况比如-1 -1 -1 0…就只需要判断一个-1即可)
+hashtable第二次去重
+
+###示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445//针对leetc">
+<meta property="og:updated_time" content="2016-05-06T08:21:08.178Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HuNanZai's Blog">
-<meta name="twitter:description">
+<meta name="twitter:title" content="3sum_quickSort">
+<meta name="twitter:description" content="KSum问题对于leetcode上类似的问题以及博客有很多，以下是我的个人总结
+##解决思路
+
+排序(去除部分重复的情况比如-1 -1 -1 0…就只需要判断一个-1即可)
+hashtable第二次去重
+
+###示例代码123456789101112131415161718192021222324252627282930313233343536373839404142434445//针对leetc">
 
 
 
@@ -106,7 +125,7 @@
   };
 </script>
 
-  <title> HuNanZai's Blog </title>
+  <title> 3sum_quickSort | HuNanZai's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -127,9 +146,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -206,9 +223,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -228,10 +245,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/05/06/3sum-quickSort/" itemprop="url">
-                  3sum_quickSort
-                </a>
+                3sum_quickSort
               
             
           </h1>
@@ -271,9 +285,7 @@
       
 
       
-        
-          
-            <h1 id="KSum问题"><a href="#KSum问题" class="headerlink" title="KSum问题"></a>KSum问题</h1><p>对于leetcode上类似的问题以及博客有很多，以下是我的个人总结</p>
+        <h1 id="KSum问题"><a href="#KSum问题" class="headerlink" title="KSum问题"></a>KSum问题</h1><p>对于leetcode上类似的问题以及博客有很多，以下是我的个人总结</p>
 <p>##解决思路</p>
 <ol>
 <li>排序(去除部分重复的情况比如-1 -1 -1 0…就只需要判断一个-1即可)</li>
@@ -306,296 +318,60 @@
 <p>###php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span><span class="params">(&amp;$arr)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	quickSortByPos($arr, <span class="number">0</span>, count($arr)<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">return</span> $arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSortByPos</span><span class="params">(&amp;$arr, $begin, $end)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> ($begin &gt;= $end) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	$i = $begin;</span><br><span class="line">	$j = $end;</span><br><span class="line">	$pos = intval(floor(($begin+$end)/<span class="number">2</span>));</span><br><span class="line">	$compare	= $arr[$pos];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> ($i&lt;$j) &#123;</span><br><span class="line">		<span class="keyword">if</span> ($arr[$i] &gt; $compare) &#123;</span><br><span class="line">			$arr[$pos] = $arr[$i];</span><br><span class="line">			$pos = $i;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			$i++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> ($arr[$j] &lt; $compare) &#123;</span><br><span class="line">			$arr[$pos] = $arr[$j];</span><br><span class="line">			$pos = $j;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			$j--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	$arr[$pos] = $compare;</span><br><span class="line"></span><br><span class="line">	quickSortByPos($arr, $begin, $pos<span class="number">-1</span>);</span><br><span class="line">	quickSortByPos($arr, $pos+<span class="number">1</span>, $end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>###javascript<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> quickSort = <span class="function"><span class="keyword">function</span> (<span class="params">arr, start, end</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start&gt;=end) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> i, j, pos, compare;</span><br><span class="line">    i = start;</span><br><span class="line">    j = end;</span><br><span class="line">    pos = <span class="built_in">Math</span>.floor((start+end)/<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    compare = arr[pos];</span><br><span class="line">    <span class="keyword">while</span> (i&lt;j) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i]&gt;compare) &#123;</span><br><span class="line">            arr[pos] = arr[i];</span><br><span class="line">            pos = i;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (arr[j]&lt;compare) &#123;</span><br><span class="line">            arr[pos] = arr[j];</span><br><span class="line">            pos = j;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[pos] = compare;</span><br><span class="line"></span><br><span class="line">    quickSort(arr, start, pos<span class="number">-1</span>);</span><br><span class="line">    quickSort(arr, pos+<span class="number">1</span>, end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/04/GithubHexoBlog/" itemprop="url">
-                  快速简单的个人博客搭建
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-04T14:17:41+08:00" content="2016-05-04">
-              2016-05-04
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/算法/" rel="tag">#算法</a>
           
-            
-          
-
-          
-
-          
-          
-
+            <a href="/tags/leetecode/" rel="tag">#leetecode</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><ul>
-<li><a href="https://hexo.io/zh-cn/" target="_blank" rel="external">Hexo</a>+<a href="http://github.com/" target="_blank" rel="external">Github</a></li>
-<li><a href="http://hunanzai.github.io/" target="_blank" rel="external">我的博客</a></li>
-</ul>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="For-Windows"><a href="#For-Windows" class="headerlink" title="For Windows"></a>For Windows</h2><p>下面这些东西是需要你提前准备好的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Github账号:在线托管你的博客  </span><br><span class="line"></span><br><span class="line">GitBash:同步你的博客改动到Github(一些有意思的主题包的下载)  </span><br><span class="line"></span><br><span class="line">NodeJs:构建整个博客相关的框架(hexo包)</span><br><span class="line"></span><br><span class="line">各种相关的技术包:markdown语法、ssh啊什么的- -</span><br></pre></td></tr></table></figure></p>
-<h1 id="开工！"><a href="#开工！" class="headerlink" title="开工！"></a>开工！</h1><h2 id="0x00-Github中创建-Username-github-io的仓库"><a href="#0x00-Github中创建-Username-github-io的仓库" class="headerlink" title="0x00 Github中创建{Username}.github.io的仓库"></a>0x00 Github中创建{Username}.github.io的仓库</h2><ol>
-<li><p>Github-&gt;Repositories—&gt;new</p>
-</li>
-<li><p>Add {Username} repository</p>
-</li>
-<li><p>Save</p>
-</li>
-<li><p>Got the git location:  </p>
-<p> git@github.com/{Username}/{Username}.github.io  </p>
-</li>
-</ol>
-<h2 id="0x01-NodeJs安装Hexo"><a href="#0x01-NodeJs安装Hexo" class="headerlink" title="0x01 NodeJs安装Hexo"></a>0x01 NodeJs安装Hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-<h2 id="0x02-构建本地博客"><a href="#0x02-构建本地博客" class="headerlink" title="0x02 构建本地博客"></a>0x02 构建本地博客</h2><ol>
-<li><p>初始化  </p>
-<p> 找到一个空文件夹TmpDir</p>
-</li>
-<li><p>构建<br> 在文件夹中打开命令窗口执行</p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	hexo init	</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-<li><p>效果检查  </p>
-<p> 构建完成之后，继续在命令窗口执行</p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	hexo server</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p> 访问<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a>遍可以看到自己的博客了！</p>
-</li>
-<li><p>新建博文  </p>
-<p> 执行命令</p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	hex new &quot;xxx&quot;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-</ol>
-<pre><code>可以看到生成了source/_posts/xxx.md,编辑对应的文件即可
-</code></pre><h2 id="0x03-发布"><a href="#0x03-发布" class="headerlink" title="0x03 发布"></a>0x03 发布</h2><p>通过0x02你已经写好了自己的博文，怎么发布呢？</p>
-<ol>
-<li><p>通过git-bash生成自己的ssh-&gt;id_rsa.pub</p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -C &quot;xxx@xxx.com&quot;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-<li><p>添加公钥到github-<a href="https://github.com/settings/ssh" target="_blank" rel="external">ssh管理</a>中</p>
-</li>
-<li><p>修改博客根目录下的_config.yml  </p>
-<p> 具体是关于Delpoy配置段</p>
-<p> <code>#Deployment</code><br><br> <code>##Docs: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">https://hexo.io/docs/deployment.html</a> </code><br><br> <code>deploy:</code><br><br> <code>    type:git</code><br><br> <code>    repository: git@github.com:{Username}/{Username}.github.io.git</code><br></p>
-</li>
-<li><p>命令行安装hexo-deployer-git  </p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-<li><p>部署上线！</p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-</ol>
-<h2 id="0x04-访问http-s-Username-github-io-来查看自己的博客！"><a href="#0x04-访问http-s-Username-github-io-来查看自己的博客！" class="headerlink" title="0x04 访问http(s)://{Username}.github.io 来查看自己的博客！"></a>0x04 访问http(s)://{Username}.github.io 来查看自己的博客！</h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/05/04/GithubHexoBlog/" rel="next" title="快速简单的个人博客搭建">
+                <i class="fa fa-chevron-left"></i> 快速简单的个人博客搭建
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/05/04/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-04T10:50:48+08:00" content="2016-05-04">
-              2016-05-04
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -603,6 +379,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -622,8 +402,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/default_avatar.jpg"
@@ -666,6 +455,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#KSum问题"><span class="nav-number">1.</span> <span class="nav-text">KSum问题</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -762,6 +562,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
