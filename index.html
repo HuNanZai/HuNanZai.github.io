@@ -69,6 +69,90 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-mysql-transaction" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/09/mysql-transaction/" class="article-date">
+  <time datetime="2016-05-09T02:06:50.000Z" itemprop="datePublished">2016-05-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/09/mysql-transaction/">事务问题研究</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>假如需要更新用户的一笔金额到另一个用户的账户，并且中间的任何一个环节都不能出错，如果出错则视为本次转账失败，那么怎么去保证这个流程的稳定？</p>
+<p>中间涉及到的一些过程:</p>
+<pre><code>1. 锁定用户账户中的这笔钱
+2. 检查另一个账户是否存在
+3. 更新另一个账户
+4. 更新成功，扣除这个账户的钱
+5. 记录相关的log
+</code></pre><p>如果按照上面的这种流程，在并发的环境下很容易出现各种问题:</p>
+<pre><code>1. 另一个账户可能被转入很多笔重复的钱
+2. 另一个账户的钱更新成功，但是此时这个账户已经没有足够的金额扣款(出现负数)
+</code></pre><h1 id="并发下引起的问题"><a href="#并发下引起的问题" class="headerlink" title="并发下引起的问题"></a>并发下引起的问题</h1><pre><code>1. 脏读
+2. 不可重复读
+3. 幻读
+</code></pre><p>考虑一下两个流程</p>
+<h2 id="1-脏读"><a href="#1-脏读" class="headerlink" title="1. 脏读"></a>1. 脏读</h2><pre><code>一个事务读取到了另一个事务没有提交的数据(还保存在内存中的&quot;脏&quot;数据)
+</code></pre><p>详细解释:  </p>
+<pre><code>1. 一个事务正在访问数据，并且对数据做了修改，而且这个修改还没有提交到数据库中(没有flush到log文件中)
+2. 而另一个事务也访问这个数据,从而使用了内存中更新了但是还没有提交的已经修改的数据,那么这个数据就是脏数据(依据这种数据来做的操作都是不可靠的,因为你还不知道提交是否成功)
+</code></pre><h2 id="2-不可重复读"><a href="#2-不可重复读" class="headerlink" title="2. 不可重复读"></a>2. 不可重复读</h2><pre><code>在同一事务中，两次读取同一数据，得到的内容不同
+</code></pre><p>详细解释:  </p>
+<pre><code>1. 一个事务前后有两次对于同一个资源的读取
+2. 另一个事务正好在这个期间访问这个资源并作了修改
+3. 前一个事务前后两次读取资源可能因为步骤2不一样
+</code></pre><h2 id="3-幻读"><a href="#3-幻读" class="headerlink" title="3. 幻读"></a>3. 幻读</h2><pre><code>事务A读取与搜索条件相匹配的若干行.事务B以插入或删除行等方式来修改事务A的结果集，然后再提交.
+</code></pre><p>详细解释:  </p>
+<pre><code>1. 一个事务进行一个范围的数据更新
+2. 另一个事务进行一个在步骤1范围内的数据插入(但是没有更新)
+3. 于是在步骤1执行完成之后数据库中仍有更新失败的数据(幻觉出现,其实是由并发的步骤2产生的)
+</code></pre><h1 id="解决方案目标"><a href="#解决方案目标" class="headerlink" title="解决方案目标"></a>解决方案目标</h1><p>想办法加上各种锁</p>
+<h1 id="自己-的解决方案"><a href="#自己-的解决方案" class="headerlink" title="自己 的解决方案"></a>自己 的解决方案</h1><h2 id="设计上解耦"><a href="#设计上解耦" class="headerlink" title="设计上解耦"></a>设计上解耦</h2><ul>
+<li>加上中间结果的记录表(账户出账表以及进账表)</li>
+</ul>
+<h2 id="代码上处理"><a href="#代码上处理" class="headerlink" title="代码上处理"></a>代码上处理</h2><ul>
+<li>在更新之前将所有涉及的数据先取出来存放(或者直接改为缓存存放)  </li>
+</ul>
+<p>两种设计都还是不能解决根本的问题,并发的时候的请求还是会导致数据库数据错乱。</p>
+<h1 id="Mysql-的解决方案——事务以及各种锁"><a href="#Mysql-的解决方案——事务以及各种锁" class="headerlink" title="Mysql 的解决方案——事务以及各种锁"></a>Mysql 的解决方案——事务以及各种锁</h1><h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><pre><code>一组连续的数据库操作. 要么全部执行成功,要么全部失败.
+</code></pre><h3 id="特性-ACID"><a href="#特性-ACID" class="headerlink" title="特性:ACID"></a>特性:ACID</h3><pre><code>A原子性: 要么全部执行成功,要不都不执行(执行到一半发生错误则回滚)
+C一致性: 事务的执行不能改变数据库数据的一致
+I独立性: 两个及以上的事务不会出现交错执行的状态
+D持久性: 事务执行成功之后对于数据库的改动持久的保存在数据库中,不会无缘无故回滚
+</code></pre><h3 id="使用样例"><a href="#使用样例" class="headerlink" title="使用样例"></a>使用样例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//set AUTOCOMMIT = false;</span><br><span class="line"></span><br><span class="line">start transaction;</span><br><span class="line"></span><br><span class="line">//sql</span><br><span class="line">update `xxx` set `xxx`=&apos;xxx&apos; where `xx`=&apos;xx&apos; limit 1;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">commit/rollback;</span><br></pre></td></tr></table></figure>
+<h2 id="各种锁"><a href="#各种锁" class="headerlink" title="各种锁"></a>各种锁</h2>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/05/09/mysql-transaction/" data-id="cinzudm7x00002kqwjbpyzdag" class="article-share-link" data-share="baidu" data-title="事务问题研究">Share</a>
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事务/">事务</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-3sum-quickSort" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/05/06/3sum-quickSort/" class="article-date">
@@ -122,7 +206,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/06/3sum-quickSort/" data-id="cinvhzein0000hoqwkigtf3rc" class="article-share-link" data-share="baidu" data-title="3sum_quickSort">Share</a>
+        <a data-url="http://yoursite.com/2016/05/06/3sum-quickSort/" data-id="cinzud3y00000w0qwmx1t9s72" class="article-share-link" data-share="baidu" data-title="3sum_quickSort">Share</a>
       
 
       
@@ -229,7 +313,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/04/GithubHexoBlog/" data-id="cinvhzeix0002hoqww85yar1x" class="article-share-link" data-share="baidu" data-title="快速简单的个人博客搭建">Share</a>
+        <a data-url="http://yoursite.com/2016/05/04/GithubHexoBlog/" data-id="cinzud3zc0002w0qwvcv0vz1i" class="article-share-link" data-share="baidu" data-title="快速简单的个人博客搭建">Share</a>
       
 
       
@@ -280,7 +364,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/04/hello-world/" data-id="cinvhzej60004hoqwf42j1h49" class="article-share-link" data-share="baidu" data-title="Hello World">Share</a>
+        <a data-url="http://yoursite.com/2016/05/04/hello-world/" data-id="cinzud3zj0004w0qwto29x5mr" class="article-share-link" data-share="baidu" data-title="Hello World">Share</a>
       
 
       
@@ -304,7 +388,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetecode/">leetecode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人/">个人</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetecode/">leetecode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人/">个人</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务/">事务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -313,7 +397,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/leetecode/" style="font-size: 10px;">leetecode</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+      <a href="/tags/leetecode/" style="font-size: 10px;">leetecode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
   </div>
 
@@ -322,7 +406,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -332,6 +416,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/09/mysql-transaction/">事务问题研究</a>
+          </li>
         
           <li>
             <a href="/2016/05/06/3sum-quickSort/">3sum_quickSort</a>
