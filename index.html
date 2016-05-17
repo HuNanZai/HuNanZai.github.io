@@ -69,6 +69,75 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-heapSort" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/heapSort/" class="article-date">
+  <time datetime="2016-05-17T07:02:52.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/heapSort/">曾经拦路虎系列——堆排序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前就没有好好学习过堆排序, 也是现在话时间填坑吧<br>怎么说呢,现在掌握好过一辈子都学不会</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>惯例:<a href="https://zh.wikipedia.org/wiki/%E5%A0%86%E6%8E%92%E5%BA%8F#" target="_blank" rel="external">维基百科传送门</a>  </p>
+<h2 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h2><ul>
+<li>堆化数据！—— 将数据想象成一个堆</li>
+</ul>
+<h1 id="算法说明"><a href="#算法说明" class="headerlink" title="算法说明"></a>算法说明</h1><ol>
+<li>自底向上堆化数据</li>
+<li>交换第一个(最大的)和末尾的节点</li>
+<li>自顶向下调整堆(同时堆大小-1——最大的已经在最后一个了)</li>
+<li>重复2-3步骤</li>
+</ol>
+<h2 id="结构上的关键点"><a href="#结构上的关键点" class="headerlink" title="结构上的关键点"></a>结构上的关键点</h2><ul>
+<li>父节点i的左子节点在位置(2*i+1)</li>
+<li>父节点i的右子节点在位置(2*i+2)</li>
+<li>子节点i的父节点在位置floor((i-1)/2)</li>
+</ul>
+<h2 id="难理解的地方标注"><a href="#难理解的地方标注" class="headerlink" title="难理解的地方标注"></a>难理解的地方标注</h2><ul>
+<li>调整堆  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">之前对于调整堆的操作有诸多疑问:</span><br><span class="line">	- 为什么只需要跟一边的子节点比较就可以了?</span><br><span class="line">	- 为什么只要向下调整，难道不会出现需要向上考虑的情况吗?</span><br><span class="line"></span><br><span class="line">现在终于想明白了:</span><br><span class="line">	- 调整便意味着数据已经堆化(从上到下大小不会乱)</span><br><span class="line"></span><br><span class="line">...想不通的时候觉得十分难, 想通了也就这么一回事(以前太浪)</span><br></pre></td></tr></table></figure>
+<h1 id="示例解法代码"><a href="#示例解法代码" class="headerlink" title="示例解法代码"></a>示例解法代码</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 堆排序</span><br><span class="line"> * 		</span><br><span class="line"> * <span class="doctag">@param</span>  array &amp;$arr </span><br><span class="line"> * <span class="doctag">@return</span> </span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heapSort</span><span class="params">(&amp;$arr)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	$len = count($arr);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//建堆</span></span><br><span class="line">	<span class="keyword">for</span> ($i=intval(floor(($len<span class="number">-2</span>)/<span class="number">2</span>)); $i&gt;=<span class="number">0</span>; $i--) &#123;</span><br><span class="line">		heapify($arr, $i, $len);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> ($len &gt; <span class="number">1</span>) &#123;</span><br><span class="line">		swap($arr[<span class="number">0</span>], $arr[$len<span class="number">-1</span>]);</span><br><span class="line">		heapify($arr, <span class="number">0</span>, --$len);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 调整堆(基于子树都是最大堆的前提)</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@param</span>  array &amp;$arr 数组</span><br><span class="line"> * <span class="doctag">@param</span>  int $node 节点位置</span><br><span class="line"> * <span class="doctag">@param</span>  int $len  当前堆大小(堆排也是就地排序的一种)</span><br><span class="line"> * <span class="doctag">@return</span> null       </span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heapify</span><span class="params">(&amp;$arr, $node, $len)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	$child = <span class="number">2</span>*$node+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ($child &gt; $len) </span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (($child+<span class="number">1</span>) &lt; $len &amp;&amp; $arr[$child+<span class="number">1</span>] &gt; $arr[$child])</span><br><span class="line">		$child++;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ($arr[$node] &lt;= $arr[$child]) &#123;</span><br><span class="line">		swap($arr[$node], $arr[$child]);</span><br><span class="line">		heapify($arr, $child, $len);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span><span class="params">(&amp;$a, &amp;$b)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	$tmp = $a;</span><br><span class="line">	$a = $b;</span><br><span class="line">	$b = $tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><ul>
+<li>平均 时间复杂度为:O(nlogn) 空间复杂度:O(1)</li>
+<li><a href="https://www.zhihu.com/question/23873747" target="_blank" rel="external">为什么平均情况下快排比堆排序要优秀?</a></li>
+<li>思想没有快排优秀——比较次数比快排多(快排一般都能划分出两个严格的区分大小子集,堆排序不能)</li>
+<li><a href="http://blog.csdn.net/pongba/article/details/2544933" target="_blank" rel="external">鼎力推荐！排序中信息的损耗</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/05/17/heapSort/" data-id="ciob6i6ig00049gqwu49mjrr7" class="article-share-link" data-share="baidu" data-title="曾经拦路虎系列——堆排序">Share</a>
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序/">排序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ip-regex" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/05/17/ip-regex/" class="article-date">
@@ -120,7 +189,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/17/ip-regex/" data-id="cioauyol10005poqwe56sy73s" class="article-share-link" data-share="baidu" data-title="用正则表达式匹配ip地址">Share</a>
+        <a data-url="http://yoursite.com/2016/05/17/ip-regex/" data-id="ciob6i6im00079gqwvf8fujxk" class="article-share-link" data-share="baidu" data-title="用正则表达式匹配ip地址">Share</a>
       
 
       
@@ -214,7 +283,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/09/mysql-transaction/" data-id="cioauyol50007poqwr18oleap" class="article-share-link" data-share="baidu" data-title="事务问题研究">Share</a>
+        <a data-url="http://yoursite.com/2016/05/09/mysql-transaction/" data-id="ciob6i6ip00089gqwgr1yw7sl" class="article-share-link" data-share="baidu" data-title="事务问题研究">Share</a>
       
 
       
@@ -282,13 +351,13 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/06/3sum-quickSort/" data-id="cioauyoki0000poqw08l5k65f" class="article-share-link" data-share="baidu" data-title="3sum_quickSort">Share</a>
+        <a data-url="http://yoursite.com/2016/05/06/3sum-quickSort/" data-id="ciob6i6hz00009gqwlb42332j" class="article-share-link" data-share="baidu" data-title="3sum_quickSort">Share</a>
       
 
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetecode/">leetecode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetecode/">leetecode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序/">排序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
     </footer>
   </div>
@@ -389,7 +458,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/04/GithubHexoBlog/" data-id="cioauyokr0002poqw4prw2f9g" class="article-share-link" data-share="baidu" data-title="快速简单的个人博客搭建">Share</a>
+        <a data-url="http://yoursite.com/2016/05/04/GithubHexoBlog/" data-id="ciob6i6i700029gqwcyqmesrf" class="article-share-link" data-share="baidu" data-title="快速简单的个人博客搭建">Share</a>
       
 
       
@@ -440,7 +509,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/04/hello-world/" data-id="cioauyoky0004poqw9rkayjpj" class="article-share-link" data-share="baidu" data-title="Hello World">Share</a>
+        <a data-url="http://yoursite.com/2016/05/04/hello-world/" data-id="ciob6i6ij00059gqwxfvxnsj5" class="article-share-link" data-share="baidu" data-title="Hello World">Share</a>
       
 
       
@@ -464,7 +533,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetecode/">leetecode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人/">个人</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务/">事务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则/">正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetecode/">leetecode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人/">个人</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务/">事务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则/">正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -473,7 +542,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/leetecode/" style="font-size: 10px;">leetecode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/正则/" style="font-size: 10px;">正则</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+      <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/leetecode/" style="font-size: 10px;">leetecode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/排序/" style="font-size: 20px;">排序</a> <a href="/tags/正则/" style="font-size: 10px;">正则</a> <a href="/tags/算法/" style="font-size: 20px;">算法</a>
     </div>
   </div>
 
@@ -482,7 +551,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -492,6 +561,10 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/17/heapSort/">曾经拦路虎系列——堆排序</a>
+          </li>
         
           <li>
             <a href="/2016/05/17/ip-regex/">用正则表达式匹配ip地址</a>
@@ -507,10 +580,6 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
         
           <li>
             <a href="/2016/05/04/GithubHexoBlog/">快速简单的个人博客搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/04/hello-world/">Hello World</a>
           </li>
         
       </ul>
