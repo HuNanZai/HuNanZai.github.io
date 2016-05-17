@@ -28,7 +28,7 @@
 5. 记录相关的log
 如果按照上面的这种流程，在并发的环境下很容易出现各种问题:
 1. 另一个账户可能被转入很多笔">
-<meta property="og:updated_time" content="2016-05-09T10:04:44.400Z">
+<meta property="og:updated_time" content="2016-05-12T09:55:39.138Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="事务问题研究">
 <meta name="twitter:description" content="背景假如需要更新用户的一笔金额到另一个用户的账户，并且中间的任何一个环节都不能出错，如果出错则视为本次转账失败，那么怎么去保证这个流程的稳定？
@@ -156,12 +156,22 @@ C一致性: 事务的执行不能改变数据库数据的一致
 I独立性: 两个及以上的事务不会出现交错执行的状态
 D持久性: 事务执行成功之后对于数据库的改动持久的保存在数据库中,不会无缘无故回滚
 </code></pre><h3 id="使用样例"><a href="#使用样例" class="headerlink" title="使用样例"></a>使用样例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//set AUTOCOMMIT = false;</span><br><span class="line"></span><br><span class="line">start transaction;</span><br><span class="line"></span><br><span class="line">//sql</span><br><span class="line">update `xxx` set `xxx`=&apos;xxx&apos; where `xx`=&apos;xx&apos; limit 1;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">commit/rollback;</span><br></pre></td></tr></table></figure>
-<h2 id="各种锁"><a href="#各种锁" class="headerlink" title="各种锁"></a>各种锁</h2>
+<h2 id="各种锁"><a href="#各种锁" class="headerlink" title="各种锁"></a>各种锁</h2><p>根据数据操作类型:  </p>
+<ul>
+<li>读锁</li>
+<li>写锁</li>
+</ul>
+<p>锁定数据的范围:  </p>
+<ul>
+<li>表锁</li>
+<li>行锁</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/09/mysql-transaction/" data-id="cinzudm7x00002kqwjbpyzdag" class="article-share-link" data-share="baidu" data-title="事务问题研究">Share</a>
+        <a data-url="http://yoursite.com/2016/05/09/mysql-transaction/" data-id="cioaupigo0007woqw9vfooosr" class="article-share-link" data-share="baidu" data-title="事务问题研究">Share</a>
       
 
       
@@ -174,6 +184,15 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/05/17/ip-regex/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          用正则表达式匹配ip地址
+        
+      </div>
+    </a>
   
   
     <a href="/2016/05/06/3sum-quickSort/" id="article-nav-older" class="article-nav-link-wrap">
@@ -196,7 +215,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetecode/">leetecode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人/">个人</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务/">事务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetecode/">leetecode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人/">个人</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务/">事务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则/">正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -205,7 +224,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/leetecode/" style="font-size: 10px;">leetecode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+      <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/leetecode/" style="font-size: 10px;">leetecode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/正则/" style="font-size: 10px;">正则</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
   </div>
 
@@ -214,7 +233,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -224,6 +243,10 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/17/ip-regex/">用正则表达式匹配ip地址</a>
+          </li>
         
           <li>
             <a href="/2016/05/09/mysql-transaction/">事务问题研究</a>

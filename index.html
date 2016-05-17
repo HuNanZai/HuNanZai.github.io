@@ -69,6 +69,72 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-ip-regex" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/ip-regex/" class="article-date">
+  <time datetime="2016-05-17T02:28:43.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/ip-regex/">用正则表达式匹配ip地址</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>使用正则匹配的关键在于弄清楚问题的表征  </p>
+<p>在这里问题的表征具体为ip地址的表示方式</p>
+<h1 id="关于ip"><a href="#关于ip" class="headerlink" title="关于ip"></a>关于ip</h1><p>这里的ip特指ipv4</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+<li><a href="https://zh.wikipedia.org/wiki/IP%E5%9C%B0%E5%9D%80#IPv4.E4.BD.8D.E5.9D.80" target="_blank" rel="external">传送门</a></li>
+</ul>
+<h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><ul>
+<li>32位 4段 每一段0-255</li>
+<li>分为A\B\C\D\E 5大类</li>
+</ul>
+<h1 id="正则"><a href="#正则" class="headerlink" title="正则"></a>正则</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p><a href="https://msdn.microsoft.com/zh-cn/library/ae5bf541(VS.80" target="_blank" rel="external">传送门</a>.aspx)</p>
+<ul>
+<li>匹配0-9: [0-9]</li>
+<li>匹配多个: []{times}</li>
+<li>条件或者: ()|()</li>
+</ul>
+<h2 id="如何匹配ip"><a href="#如何匹配ip" class="headerlink" title="如何匹配ip"></a>如何匹配ip</h2><p>根据ip每一段的范围为0-255来提取</p>
+<p>0-255 总共分为5部分:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0-9: [0-9]</span><br><span class="line">10-99: [1-9][0-9]</span><br><span class="line">100-199: 1[0-9][0-9]</span><br><span class="line">200-249: 2[0-4][0-9]</span><br><span class="line">250-255: 25[0-5]</span><br></pre></td></tr></table></figure></p>
+<p>得到的ip表达式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">抽象表达:</span><br><span class="line">([regex:255]\.)&#123;3&#125;([regex:255])</span><br><span class="line"></span><br><span class="line">代入上面的汇总结果得到:</span><br><span class="line">/^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.)&#123;3&#125;(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]))$/</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>php中利用正则匹配ip的函数:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkIp</span><span class="params">($str)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> preg_match(<span class="string">'/^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.)&#123;3&#125;(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]))$/'</span>, $str) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> checkIp(<span class="string">'0.0.0.0'</span>) ? <span class="string">'true'</span> : <span class="string">'false'</span>;		<span class="comment">//true</span></span><br><span class="line"><span class="keyword">echo</span> checkIp(<span class="string">'192.168.0.1'</span>) ? <span class="string">'true'</span> : <span class="string">'false'</span>;		<span class="comment">//true</span></span><br><span class="line"><span class="keyword">echo</span> checkIp(<span class="string">'255.255.255.0'</span>) ? <span class="string">'true'</span> : <span class="string">'false'</span>;	<span class="comment">//true</span></span><br><span class="line"><span class="keyword">echo</span> checkIp(<span class="string">'256.0.0.1'</span>) ? <span class="string">'true'</span> : <span class="string">'false'</span>;		<span class="comment">//false</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ol>
+<li>ip地址形式如果可以为 003.012.022.222 这种开头带0的怎么办?</li>
+<li>如果要严格匹配A|B|C|D|E 5大类ip怎么办？</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/05/17/ip-regex/" data-id="cioaupigk0005woqwxuv2yxh8" class="article-share-link" data-share="baidu" data-title="用正则表达式匹配ip地址">Share</a>
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ip/">ip</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/正则/">正则</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-mysql-transaction" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/05/09/mysql-transaction/" class="article-date">
@@ -133,12 +199,22 @@ C一致性: 事务的执行不能改变数据库数据的一致
 I独立性: 两个及以上的事务不会出现交错执行的状态
 D持久性: 事务执行成功之后对于数据库的改动持久的保存在数据库中,不会无缘无故回滚
 </code></pre><h3 id="使用样例"><a href="#使用样例" class="headerlink" title="使用样例"></a>使用样例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//set AUTOCOMMIT = false;</span><br><span class="line"></span><br><span class="line">start transaction;</span><br><span class="line"></span><br><span class="line">//sql</span><br><span class="line">update `xxx` set `xxx`=&apos;xxx&apos; where `xx`=&apos;xx&apos; limit 1;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">commit/rollback;</span><br></pre></td></tr></table></figure>
-<h2 id="各种锁"><a href="#各种锁" class="headerlink" title="各种锁"></a>各种锁</h2>
+<h2 id="各种锁"><a href="#各种锁" class="headerlink" title="各种锁"></a>各种锁</h2><p>根据数据操作类型:  </p>
+<ul>
+<li>读锁</li>
+<li>写锁</li>
+</ul>
+<p>锁定数据的范围:  </p>
+<ul>
+<li>表锁</li>
+<li>行锁</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/09/mysql-transaction/" data-id="cinzudm7x00002kqwjbpyzdag" class="article-share-link" data-share="baidu" data-title="事务问题研究">Share</a>
+        <a data-url="http://yoursite.com/2016/05/09/mysql-transaction/" data-id="cioaupigo0007woqw9vfooosr" class="article-share-link" data-share="baidu" data-title="事务问题研究">Share</a>
       
 
       
@@ -206,7 +282,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/06/3sum-quickSort/" data-id="cinzud3y00000w0qwmx1t9s72" class="article-share-link" data-share="baidu" data-title="3sum_quickSort">Share</a>
+        <a data-url="http://yoursite.com/2016/05/06/3sum-quickSort/" data-id="cioaupig30000woqwas02s75i" class="article-share-link" data-share="baidu" data-title="3sum_quickSort">Share</a>
       
 
       
@@ -313,7 +389,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/04/GithubHexoBlog/" data-id="cinzud3zc0002w0qwvcv0vz1i" class="article-share-link" data-share="baidu" data-title="快速简单的个人博客搭建">Share</a>
+        <a data-url="http://yoursite.com/2016/05/04/GithubHexoBlog/" data-id="cioaupigb0002woqw2km7ld7n" class="article-share-link" data-share="baidu" data-title="快速简单的个人博客搭建">Share</a>
       
 
       
@@ -364,7 +440,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/05/04/hello-world/" data-id="cinzud3zj0004w0qwto29x5mr" class="article-share-link" data-share="baidu" data-title="Hello World">Share</a>
+        <a data-url="http://yoursite.com/2016/05/04/hello-world/" data-id="cioaupigi0004woqw0m8zpv7n" class="article-share-link" data-share="baidu" data-title="Hello World">Share</a>
       
 
       
@@ -388,7 +464,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetecode/">leetecode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人/">个人</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务/">事务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetecode/">leetecode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人/">个人</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/事务/">事务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则/">正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -397,7 +473,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/leetecode/" style="font-size: 10px;">leetecode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+      <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/leetecode/" style="font-size: 10px;">leetecode</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/正则/" style="font-size: 10px;">正则</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
   </div>
 
@@ -406,7 +482,7 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -416,6 +492,10 @@ D持久性: 事务执行成功之后对于数据库的改动持久的保存在�
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/17/ip-regex/">用正则表达式匹配ip地址</a>
+          </li>
         
           <li>
             <a href="/2016/05/09/mysql-transaction/">事务问题研究</a>
