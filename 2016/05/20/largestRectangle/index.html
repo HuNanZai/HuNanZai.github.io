@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="算法,leetcode," />
 
 
 
@@ -84,19 +84,43 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="问题说明将一组数想象成宽为1的矩形拼接而成的直方图, 求解直方图区域下最大的矩形面积
+比如:
+[1, 2, 3, 4, 5, 6]
+最大的直方就是[3-6]*4 或者 [4-6]*4为12
+[1, 1, 1, 5, 1]
+最大直方就是 1*5 = 5
+...
+解法分析方案1——BruteForce解法说明:  
+1. 依次取出每一个数
+2. 从这个数的当前位置向前,向后搜索最大的&amp;quot;涵盖&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2016/05/04/hello-world/index.html">
+<meta property="og:title" content="求解一组数中的最大矩形">
+<meta property="og:url" content="http://yoursite.com/2016/05/20/largestRectangle/index.html">
 <meta property="og:site_name" content="HuNanZai's Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-05-04T02:50:48.777Z">
+<meta property="og:description" content="问题说明将一组数想象成宽为1的矩形拼接而成的直方图, 求解直方图区域下最大的矩形面积
+比如:
+[1, 2, 3, 4, 5, 6]
+最大的直方就是[3-6]*4 或者 [4-6]*4为12
+[1, 1, 1, 5, 1]
+最大直方就是 1*5 = 5
+...
+解法分析方案1——BruteForce解法说明:  
+1. 依次取出每一个数
+2. 从这个数的当前位置向前,向后搜索最大的&amp;quot;涵盖&amp;">
+<meta property="og:updated_time" content="2016-05-23T09:59:57.980Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="求解一组数中的最大矩形">
+<meta name="twitter:description" content="问题说明将一组数想象成宽为1的矩形拼接而成的直方图, 求解直方图区域下最大的矩形面积
+比如:
+[1, 2, 3, 4, 5, 6]
+最大的直方就是[3-6]*4 或者 [4-6]*4为12
+[1, 1, 1, 5, 1]
+最大直方就是 1*5 = 5
+...
+解法分析方案1——BruteForce解法说明:  
+1. 依次取出每一个数
+2. 从这个数的当前位置向前,向后搜索最大的&amp;quot;涵盖&amp;">
 
 
 
@@ -114,7 +138,7 @@ Quick">
   };
 </script>
 
-  <title> Hello World | HuNanZai's Blog </title>
+  <title> 求解一组数中的最大矩形 | HuNanZai's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -234,7 +258,7 @@ Quick">
             
             
               
-                Hello World
+                求解一组数中的最大矩形
               
             
           </h1>
@@ -246,8 +270,8 @@ Quick">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-04T10:50:48+08:00" content="2016-05-04">
-              2016-05-04
+            <time itemprop="dateCreated" datetime="2016-05-20T15:36:58+08:00" content="2016-05-20">
+              2016-05-20
             </time>
           </span>
 
@@ -261,7 +285,7 @@ Quick">
 
           
           
-             <span id="/2016/05/04/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+             <span id="/2016/05/20/largestRectangle/" class="leancloud_visitors" data-flag-title="求解一组数中的最大矩形">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -288,15 +312,43 @@ Quick">
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h1 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h1><p>将一组数想象成宽为1的矩形拼接而成的直方图, 求解直方图区域下最大的矩形面积</p>
+<pre><code>比如:
+[1, 2, 3, 4, 5, 6]
+最大的直方就是[3-6]*4 或者 [4-6]*4为12
+[1, 1, 1, 5, 1]
+最大直方就是 1*5 = 5
+...
+</code></pre><h1 id="解法分析"><a href="#解法分析" class="headerlink" title="解法分析"></a>解法分析</h1><h2 id="方案1——BruteForce"><a href="#方案1——BruteForce" class="headerlink" title="方案1——BruteForce"></a>方案1——BruteForce</h2><p>解法说明:  </p>
+<pre><code>1. 依次取出每一个数
+2. 从这个数的当前位置向前,向后搜索最大的&quot;涵盖&quot;这个数大小的范围(如果该数为4, 则5涵盖该数)
+3. 计算当前的面积,跟最大的面积做比较
+4. 重复上面3步,得到最大的面积
+</code></pre><p>解法分析:  </p>
+<pre><code>1. 时间复杂度为O(n^2)
+2. 每一次的遍历都是全新的遍历,并没有产生任何有价值的信息来优化之后的遍历
+</code></pre><h2 id="方案2——波浪演进法"><a href="#方案2——波浪演进法" class="headerlink" title="方案2——波浪演进法"></a>方案2——波浪演进法</h2><p>名字是我随便想的。</p>
+<p>解法思想:</p>
+<pre><code>想象一下一种特定的数据状态:
+当前直方图除了最后一个直方前面的都是上升状态
+[1, 2, 3, 4, 5, x]
+这种状态下计算前面1-5的最大面积只要依次取出1-5并往后计算然后比较就能找出最大面积的直方了
+
+所以在另外一个结构中维持一个对应的波浪数据,就能够对应的计算出最大的直方面积了.
+</code></pre><p>解法理解:  </p>
+<pre><code>抽象的说,
+算法一直在记录一个数据变化的趋势,只要维持这个趋势成立,那么最大的直方肯定会出现在以某个直方开头之后的部分.
+这样就避免了暴力算法中的需要同时向前向后搜索的情况出现,
+同时这种算法会将中间的&quot;特别高&quot;的部分提前剔除掉，减少了很多不必要的计算
+</code></pre><p>解法分析:</p>
+<pre><code>1. 复杂度为O(n)
+</code></pre><p>解法示例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function countLargest($arr)</span><br><span class="line">&#123;</span><br><span class="line">	$arr[] = 0;	//方便弹出计算包含最后一个矩形的面积</span><br><span class="line">	$max_area = 0;</span><br><span class="line"></span><br><span class="line">	$stack = [];</span><br><span class="line">	foreach ($arr as $k=&gt;$v) &#123;</span><br><span class="line">		$pop_pos = -1;</span><br><span class="line">		while ( end($stack) &amp;&amp; $arr[end($stack)] &gt;= $v) &#123;</span><br><span class="line">			$pop_pos = array_pop($stack);</span><br><span class="line">			$pop_value = $arr[$pop_pos];</span><br><span class="line"></span><br><span class="line">			$tmp_area = $pop_value * ($k-$pop_pos);</span><br><span class="line">			</span><br><span class="line">			if ($tmp_area &gt; $max_area) &#123;</span><br><span class="line">				$max_area = $tmp_area;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if ($pop_pos &gt; -1) &#123;</span><br><span class="line">			$arr[$pop_pos] = $v;</span><br><span class="line">			$k = $pop_pos;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		array_push($stack, $k);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return $max_area;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>算法比较巧妙, 可以大概品味存个档</li>
+</ul>
+<h1 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h1><ul>
+<li>求解矩阵中的最大全1的矩形面积</li>
+</ul>
 
       
     </div>
@@ -316,18 +368,26 @@ Quick">
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/leetcode/" rel="tag">#leetcode</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/05/19/insertSort/" rel="next" title="曾经拦路虎系列——插入排序">
+                <i class="fa fa-chevron-left"></i> 曾经拦路虎系列——插入排序
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/04/GithubHexoBlog/" rel="prev" title="快速简单的个人博客搭建">
-                快速简单的个人博客搭建 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -405,7 +465,7 @@ Quick">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -434,7 +494,7 @@ Quick">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题说明"><span class="nav-number">1.</span> <span class="nav-text">问题说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解法分析"><span class="nav-number">2.</span> <span class="nav-text">解法分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方案1——BruteForce"><span class="nav-number">2.1.</span> <span class="nav-text">方案1——BruteForce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案2——波浪演进法"><span class="nav-number">2.2.</span> <span class="nav-text">方案2——波浪演进法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引申"><span class="nav-number">4.</span> <span class="nav-text">引申</span></a></li></ol></div>
             
           </div>
         </section>
